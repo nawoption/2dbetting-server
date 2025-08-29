@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const betItemSchema = new mongoose.Schema(
     {
         slipId: { type: mongoose.Schema.Types.ObjectId, ref: "BetSlip", required: true },
-        number: { type: String, required: true }, // "30"
+        number: { type: String, required: true },
         amount: { type: Number, required: true },
         winAmount: { type: Number, default: 0 },
         status: { type: String, enum: ["PENDING", "WON", "LOST"], default: "PENDING" },

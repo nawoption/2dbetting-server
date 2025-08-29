@@ -19,7 +19,7 @@ const userController = {
             if (status) query.status = status;
 
             const total = await User.countDocuments(query);
-            const users = await User.find(query).skip(skip).limit(limit).sort({ createdAt: -1 });
+            const users = await User.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }).select("-password");
 
             res.status(200).json({
                 total,
@@ -36,8 +36,9 @@ const userController = {
 
     // ------------------- GET SINGLE USER -------------------
     getUserById: async (req, res) => {
+        const userId = req.user.id || req.params.id;
         try {
-            const user = await User.findById(req.params.id);
+            const user = await User.findById(userId).select("-password");
             if (!user) {
                 return res.status(404).json({ message: "User not found" });
             }
